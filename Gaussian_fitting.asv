@@ -1,8 +1,9 @@
 %% experimental data 
 % ---------------------------------------------------------------
-% THIS IS SAMPLE DATA, ACTUAL DATA IS TO BE INPUT HERE
-noise = (0.1 - (-0.1)).*rand(1, length(x)) + -0.1;
+% THIS IS FAKE DATA, INPUT YOUR ACTUAL DATA HERE
 x = -10:1:10;
+% y = [];
+noise = (0.1 - (-0.1)).*rand(1, length(x)) + -0.1;
 y = -5 * exp(-x.^2 / (2 * 3^2)) + noise;
 % ---------------------------------------------------------------
 
@@ -28,7 +29,6 @@ for pts = 1:length(model_x)
     model = [model, -h * exp(-model_x(pts).^2 / (2 * sigma^2))];
 end
 % ---------------------------------------------------------------
-
 
 %% largest particle radius (dual-Gaussian)
 % ---------------------------------------------------------------
@@ -60,57 +60,42 @@ disp(['Largest particle radius (single-Gaussian): ', num2str(r_sg)])
 %% Plotting
 % ---------------------------------------------------------------
 figure;
-% single-Gaussian channel
-subplot(1, 2, 1) 
-plot(model_x, model, 'b')
+subplot(1, 2, 1)
+plot(model_x, model)
+xlabel('$x$', 'Interpreter', 'latex')
+ylabel('$y$', 'Interpreter', 'latex')
 
 hold on; % plotting actual data points
 scatter(x, y, 'ro')
 hold on; % plotting largest particles
 circle(0, -r_sg , r_sg, 'g-') % single-Gaussian largest particle
 
-% axis labels and limits
-xlabel('$x$', 'Interpreter', 'latex')
-ylabel('$y$', 'Interpreter', 'latex')
-xlim([x(1) x(end)])
-ylim([x(1) x(end)])
-
 
 subplot(1, 2, 2)
-% dual-Gaussian channel
-plot(model_x, model, 'b')
+plot(model_x, model)
 hold on;
-plot(model_x, -model, 'b')
+plot(model_x, -model)
+xlabel('$x$', 'Interpreter', 'latex')
+ylabel('$y$', 'Interpreter', 'latex')
 
 hold on; % plotting actual data points
 scatter(x, y, 'ro')
 hold on;
-circle(0, 0, r, 'g-'); % dual-Gaussian largest particle
+circle(0, 0, r, 'g'); % dual-Gaussian largest particle
 
-% axis labels and limits
-xlabel('$x$', 'Interpreter', 'latex')
-ylabel('$y$', 'Interpreter', 'latex')
-xlim([x(1) x(end)])
-ylim([x(1) x(end)])
+
 % ---------------------------------------------------------------
 
 
-%% additional function definitions
-% ---------------------------------------------------------------
 function circle(x,y,r,color)
-    % Description: 
-    %   function that plots a circle given input parameters.
-    %
-    % Arguments: 
-    %   - x, y: coordinates to define center of the circle.
-    %   - r: radius of the circle. 
-    %   - color: to specify plotting color of circle
-    
+    %x and y are the coordinates of the center of the circle
+    %r is the radius of the circle
+    %0.01 is the angle step, bigger values will draw the circle faster but
+    %you might notice imperfections (not very smooth)
     ang=0:0.01:2*pi; 
     xp = r * cos(ang);
     yp = r * sin(ang);
     plot(x+xp,y+yp,color);
 end
-% ---------------------------------------------------------------
     
 

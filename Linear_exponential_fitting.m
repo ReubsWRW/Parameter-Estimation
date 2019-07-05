@@ -4,13 +4,13 @@ width = [186 149 135 114 104 100 106;
         204	170	151	127	134	120	120;
         206	172	160	131	139	140	141;
         216	186	180	160	158	146	145;
-        225	210	206	184	178	171	177]; % widt matrix
+        225	210	206	184	178	171	177]; % width matrix
     
 depth = [250 150 91	76 67 68 65;
         342	190	143	79	84	109	108;
         404	256	152	127	136	130	147;
         453	294	211	138	136	142	146;
-        576	485	335	227	173	183	179]; % height matrix
+        576	485	335	227	173	183	179]; % depth matrix
     
 p_data = [40; 50; 60; 70; 80]; % vector of powers used
 v_data = [20; 30; 40; 50; 60; 70; 80]; % vector of speeds used
@@ -45,6 +45,7 @@ for col = 1:shape(2)
    y_h = [y_h; depth(:, col)];
 end
 % -------------------------------------------------------------
+
 
 %% Nonlinear Regression 
 % ----------------------------------------------------------------
@@ -88,18 +89,18 @@ fun2 = @(t) (t(1)*x(:,1) + t(2)*ones(length(x(:,1)),1)) .* ...
 options = optimoptions('lsqnonlin', 'FunctionTolerance', 1e-20);
 theta = lsqnonlin(fun2, [2.0976, -0.43455, 0.032866, 1.4281], [], [], options); % nonlinear least-square regression
 
-% printing computed parameters
-disp('HEIGHT PARAMETERS: ')
-disp(['alpha1: ', num2str(theta(1))])
-disp(['alpha2: ', num2str(theta(2))])
-disp(['beta: ', num2str(theta(3))])
-disp(['gamma: ', num2str(theta(4))])
-
-% paramters from nonlinear regression of width
+% defining and printing computed parameters
 alpha1 = theta(1);
 alpha2 = theta(2);
 beta = theta(3);
 gamma = theta(4);
+
+disp('HEIGHT PARAMETERS: ')
+disp(['alpha1: ', alpha1])
+disp(['alpha2: ', alpha2])
+disp(['beta: ', beta])
+disp(['gamma: ', gamma])
+
 
 % computing model plot from computed parameters
 model_h = zeros(length(p_data), length(v_data));
@@ -113,6 +114,7 @@ for row = 1:length(p_data)
    end
 end
 % ----------------------------------------------------------------
+
 
 %% plotting 
 % ------------------------------------------------------------------
