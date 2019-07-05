@@ -54,20 +54,20 @@ fun1 = @(t) (t(1)*x(:,1) + t(2) * ones(length(x(:,1)),1)) .* ...
             (exp(-t(3)*x(:,2)) + t(4)*ones(length(x(:,2)),1)) ...
             - y_w;
 options = optimoptions('lsqnonlin', 'FunctionTolerance', 1e-20);
-theta = lsqnonlin(fun1, [1, 1, 1, 1], [], [], options); % nonlinear least-square regression
+init_guess1 = [1, 1, 1, 1]; % initial guess of parameters
+theta = lsqnonlin(fun1, init_guess1, [], [], options); % nonlinear least-square regression
 
-% printing computed parameters
-disp('WIDTH PARAMETERS: ')
-disp(['alpha1: ', num2str(theta(1))])
-disp(['alpha2: ', num2str(theta(2))])
-disp(['beta: ', num2str(theta(3))])
-disp(['gamma: ', num2str(theta(4))])
-
-% paramters from nonlinear regression of width
+% defining and printing computed parameters
 alpha1 = theta(1);
 alpha2 = theta(2);
 beta = theta(3);
 gamma = theta(4);
+
+disp('WIDTH PARAMETERS: ')
+disp(['alpha1: ', num2str(alpha1)])
+disp(['alpha2: ', num2str(alpha2)])
+disp(['beta: ', num2str(beta)])
+disp(['gamma: ', num2str(gamma)])
 
 % computing model plot from computed parameters
 model_w = zeros(length(p_data), length(v_data));
@@ -87,7 +87,8 @@ fun2 = @(t) (t(1)*x(:,1) + t(2)*ones(length(x(:,1)),1)) .* ...
             (exp(-t(3)*x(:,2)) + t(4)*ones(length(x(:,2)),1)) ...
             - y_h;
 options = optimoptions('lsqnonlin', 'FunctionTolerance', 1e-20);
-theta = lsqnonlin(fun2, [2.0976, -0.43455, 0.032866, 1.4281], [], [], options); % nonlinear least-square regression
+init_guess2 = [2.0976, -0.43455, 0.032866, 1.4281]; % initial guess of parameters
+theta = lsqnonlin(fun2, init_guess2, [], [], options); % nonlinear least-square regression
 
 % defining and printing computed parameters
 alpha1 = theta(1);
@@ -96,10 +97,10 @@ beta = theta(3);
 gamma = theta(4);
 
 disp('HEIGHT PARAMETERS: ')
-disp(['alpha1: ', alpha1])
-disp(['alpha2: ', alpha2])
-disp(['beta: ', beta])
-disp(['gamma: ', gamma])
+disp(['alpha1: ', num2str(alpha1)])
+disp(['alpha2: ', num2str(alpha2)])
+disp(['beta: ', num2str(beta)])
+disp(['gamma: ', num2str(gamma)])
 
 
 % computing model plot from computed parameters

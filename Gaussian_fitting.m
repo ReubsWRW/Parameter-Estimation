@@ -1,8 +1,8 @@
 %% experimental data 
 % ---------------------------------------------------------------
 % THIS IS SAMPLE DATA, ACTUAL DATA IS TO BE INPUT HERE
-noise = (0.1 - (-0.1)).*rand(1, length(x)) + -0.1;
 x = -10:1:10;
+noise = (0.1 - (-0.1)).*rand(1, length(x)) + (-0.1);
 y = -5 * exp(-x.^2 / (2 * 3^2)) + noise;
 % ---------------------------------------------------------------
 
@@ -12,7 +12,8 @@ y = -5 * exp(-x.^2 / (2 * 3^2)) + noise;
 % model ansatz (width)
 fun = @(theta) -theta(1) * exp(-x.^2 / (2 * theta(2)^2)) - y;
 options = optimoptions('lsqnonlin', 'FunctionTolerance', 1e-20);
-theta = lsqnonlin(fun, [1, 1], [], [], options); % nonlinear least-square regression
+init_guess = [1, 1]; % initial guess of parameters
+theta = lsqnonlin(fun, init_guess, [], [], options); % nonlinear least-square regression
 
 % printing computed parameters
 disp('GAUSSIAN PARAMETERS: ')
@@ -22,7 +23,8 @@ sigma = theta(2); % Gaussian width
 disp(['sigma: ', num2str(theta(2))]) 
 
 % computing model plot from computed parameters
-model_x = x(1):0.05:x(end);
+dx = 0.05; % numerical step size
+model_x = x(1):dx:x(end);
 model = [];
 for pts = 1:length(model_x)
     model = [model, -h * exp(-model_x(pts).^2 / (2 * sigma^2))];
@@ -46,7 +48,7 @@ disp (['Largest particle radius (dual-Gaussian): ', num2str(r)]);
 % ---------------------------------------------------------------
 F = @(x_r) x_r(2) + sqrt(x_r(2)^2 - x_r(1)^2) - h*exp(-x_r(1)^2/(2*sigma^2));
 options = optimset('Display','off', 'TolX', 1e-20);
-x_r0 = [2.25, 2.5]; % initial conditions have to be tuned!!
+x_r0 = [2.25, 2.5]; % initial guess of parameters (HAS TO BE TUNED!!)
 x_r = fminsearch(F, x_r0, options);
 if (h < sigma)
     r_sg = h/2;    
