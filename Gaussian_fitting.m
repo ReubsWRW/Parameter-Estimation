@@ -71,6 +71,9 @@ scatter(x, y, 'ro')
 hold on; % plotting largest particles
 circle(0, -r_sg , r_sg, 'g-') % single-Gaussian largest particle
 
+hold on; % plotting effective width lines
+plot(linspace(-sigma, sigma, 50), -h*exp(-1/2)*ones(50, 1), 'r')
+
 % axis labels and limits
 xlabel('$x$', 'Interpreter', 'latex')
 ylabel('$y$', 'Interpreter', 'latex')
@@ -88,6 +91,9 @@ hold on; % plotting actual data points
 scatter(x, y, 'ro')
 hold on;
 circle(0, 0, r, 'g-'); % dual-Gaussian largest particle
+
+hold on; % plotting effective width lines
+plot(linspace(-sigma, sigma, 50), -h*exp(-1/2)*ones(50, 1), 'r')
 
 % axis labels and limits
 xlabel('$x$', 'Interpreter', 'latex')
