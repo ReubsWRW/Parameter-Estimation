@@ -18,7 +18,7 @@ v_data = [20; 30; 40; 50; 60; 70; 80]; % vector of speeds used
 % ---------------------------------------------------------------
 
 
-%% vetorizing data 
+%% vectorizing data 
 % -------------------------------------------------------------
 v_data_new = [];
 p_data_new = [];
@@ -97,7 +97,7 @@ alpha2 = theta(2);
 beta = theta(3);
 gamma = theta(4);
 
-disp('HEIGHT PARAMETERS: ')
+disp('DEPTH PARAMETERS: ')
 disp(['alpha1: ', num2str(alpha1)])
 disp(['alpha2: ', num2str(alpha2)])
 disp(['beta: ', num2str(beta)])
@@ -157,7 +157,7 @@ surf(X, Y, depth) % surface plot of height data
 % axis labels
 xlabel('speed')
 ylabel('power')
-title('Height Data')
+title('Depth Data')
 colorbar
 % -----------------------------------------------
 
@@ -171,7 +171,7 @@ surf(X, Y, model_h) % surface plot of height model
 % axis labels
 xlabel('speed')
 ylabel('power')
-title('Height Model')
+title('Depth Model')
 colorbar
 % -----------------------------------------------
 % ------------------------------------------------------------------
